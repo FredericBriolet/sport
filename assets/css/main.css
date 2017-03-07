@@ -1,3 +1,4 @@
+/*@group fonts*/
 @font-face {
   font-family: 'Brown';
   font-style: normal;
@@ -33,12 +34,15 @@
        url('../fonts/Brown-Light.ttf')  format('truetype'),
        url('../fonts/Brown-Light.svg#svgFontName') format('svg');
 }
+/*@end fonts*/
 
+/*@group global*/
 body {
   background-color: #f5f7f7;
   color: #FF0844;
   font-family: 'Brown', Helvetica Neue, Helvetica, sans-serif; 
 }
+/*@end global*/
 
 /*@group landing*/
 .section-landing {
@@ -48,7 +52,6 @@ body {
   width: 100vw;
   height: 100vh;
   /*padding: 0 21.25em;*/
-  background-color: #83FFE7;
   background-image: linear-gradient(to bottom, #ff0844 0%, #ffb199 100%);
 }
 
@@ -56,8 +59,8 @@ body {
     width: 50%;
     height: auto;
     fill: none;
-    stroke: blue;
-    stroke-width: 1px!important;
+    stroke: #fff;
+    stroke-width: 1px;
   }
 
 /*@end landing*/
@@ -83,7 +86,6 @@ body {
     }
 
     .section-intro .categories-container {
-      margin-top: 50px;
       width: 450px;
       margin: 40px auto;
     }
@@ -138,4 +140,3 @@ body {
         }
 
 /* @end INTRO */
-}
