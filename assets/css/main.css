@@ -1,0 +1,10 @@
+body {
+  background-color: #f5f7f7;
+  color: #0000ff;
+}
+
+.section-intro {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+}
