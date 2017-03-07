@@ -8,3 +8,24 @@ body {
   display: flex;
   align-items: center;
 }
+
+/*@group landing*/
+.section-landing {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+  /*padding: 0 21.25em;*/
+  background-color: #83FFE7;
+}
+
+  .section-landing .svg-landing {
+    width: 50%;
+    height: auto;
+    fill: none;
+    stroke: blue;
+    stroke-width: 1px!important;
+  }
+
+/*@end landing*/
