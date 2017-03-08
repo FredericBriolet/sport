@@ -7,18 +7,18 @@ const csvToArray  = require('./lib/csvToarray.min');
 const fs          = require('fs');
 const config      = require('./config/config');
 
-let csv;
+var csv;
 
 //Create candidate "Database"
 csv = fs.readFileSync(config._IMPORT_PATH.timeline,'utf8');
-let data = csvToArray.CSVTOARRAY(csv);
-let timeline = []
+var data = csvToArray.CSVTOARRAY(csv);
+var timeline = []
 console.log(timeline);
 
 
-for(let i = 1; i < data.length; i++) {
+for(var i = 1; i < data.length; i++) {
     if(data[i][0].length > 0) {
-        let item = {
+        var item = {
             id: i,
             title: cleanText(data[i][0]),
             category: {
@@ -41,8 +41,8 @@ for(let i = 1; i < data.length; i++) {
 }
 
 function parseDate(date) {
-    let dmy = date.split('/');
-    let y = parseInt(dmy[2]),
+    var dmy = date.split('/');
+    var y = parseInt(dmy[2]),
         m = parseInt(dmy[1]),
         d = parseInt(dmy[0]);
     return {
@@ -57,7 +57,7 @@ function cleanText(txt) {
 }
 
 //Write Database on disk
-let data_to_write = 'exports.TIMELINE      = '+ JSON.stringify(timeline)+';';
+var data_to_write = 'TIMELINE      = '+ JSON.stringify(timeline)+';';
 
 fs.writeFile(config._EXPORT_PATH_DATA, data_to_write, (err) => {
     if (err) throw err;

@@ -4,10 +4,11 @@
  * Globals params
  */
 var landing_id = 'svg-landing';
-
-
+var timeLine_id = '#section-timeline';
+var svg_sprite_path = 'assets/img/symbol.svg#';
 //Run Js
 window.onload = init;
+
 
 /**
  * function init
@@ -16,6 +17,82 @@ window.onload = init;
 function init() {
     console.log('init');
     initLanding(landing_id);
+    var timeline = initTimeline(timeLine_id);
+}
+
+function initTimeline(el) {
+    var article = {
+            props: {
+                article: Object,
+                index: Number
+            },
+            computed: {
+                switchPosition: function () {
+                    var self = this;
+                    return self.index % 2 === 0 ? 'article-right' : 'article-left';
+                },
+                iconCategoryPath: function () {
+                    var self = this;
+                    var path = false;
+                    switch (self.article.category.name) {
+                        case 'Connected Sports Gear':
+                            path = svg_sprite_path + 'connected';
+                            break;
+                        case 'VR':
+                            path = svg_sprite_path + 'vr';
+                            break;
+                        case 'Interactive Experiences':
+                            path = svg_sprite_path + 'interactive';
+                            break;
+                        case 'E-Sport':
+                            path = svg_sprite_path + 'esport';
+                            break;
+                        case 'App':
+                            path = svg_sprite_path + 'mobile';
+                            break;
+                        default:
+                            break;
+                    }
+                    return path;
+                }
+            },
+            template: '' +
+            '<article class="timeline-article" :class="this.switchPosition">' +
+                '<div class="article-img-container">' +
+                    '<img v-if="article.medias.image" class="article-image" :src="this.article.medias.image" :alt="this.article.title">' +
+                '</div>' +
+                '<div class="article-content">' +
+                    '<header class="article-header" >'+
+                        '<svg v-if="this.iconCategoryPath" class="icon article-category"><use :xlink:href="this.iconCategoryPath"/></svg>'+
+                        '<h1 class="article-title"> {{ article.title }}</h1>' +
+                    '</header>' +
+                   '<section class="article-body">' +
+                        '<ul class="article-tags">' +
+                            '<li class="article-tag" v-for="tag in article.hashtag">{{ tag }}</li>' +
+                        '</ul>' +
+                        '<p class="article-desc">{{ article.description }}</p>'+
+                    '</section>'+
+                    '<footer>'+
+                        '<div class="article-links">' +
+                            '<a :href="this.article.url" target="_blank" rel="nofollow" class="article-link">Read the article</a>'+
+                            '<a v-if="article.medias.video" :href="this.article.medias.video" class="article-link">See the video</a>'+
+                        '</div>'+
+                    '</footer>'+
+                '</div>'+
+            '</article>'
+        };
+
+    console.log(article);
+    return new Vue({
+        el: el,
+        data: {
+            articles: TIMELINE
+        },
+        components: {
+            'article-component': article
+        }
+    });
+
 }
 
 /**
