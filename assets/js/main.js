@@ -61,28 +61,31 @@ function initTimeline(el) {
                 '<div class="article-img-container">' +
                     '<img v-if="article.medias.image" class="article-image" :src="this.article.medias.image" :alt="this.article.title">' +
                 '</div>' +
-                '<div class="article-content">' +
-                    '<header class="article-header" >'+
-                        '<svg v-if="this.iconCategoryPath" class="icon article-category"><use :xlink:href="this.iconCategoryPath"/></svg>'+
-                        '<h1 class="article-title"> {{ article.title }}</h1>' +
-                    '</header>' +
-                   '<section class="article-body">' +
-                        '<p class="article-desc">{{ article.description }}</p>'+
+                '<div class="article-content">'+
+                    '<main>'+
+                        '<header class="article-header" >'+
+                            '<svg v-if="this.iconCategoryPath" class="icon article-category"><use :xlink:href="this.iconCategoryPath"/></svg>'+
+                            '<h1 class="article-title"> {{ article.title }}</h1>'+
+                        '</header>' +
+                       '<section class="article-body">' +
+                            '<p class="article-desc">{{ article.description }}</p>'+
+                        '</section>'+
+                        '<footer>'+
+                            '<div class="article-links">' +
+                                '<a :href="this.article.url" target="_blank" rel="nofollow" class="article-link">Read the article</a>'+
+                                '<a v-if="article.medias.video" :href="this.article.medias.video" class="article-link">See the video</a>'+
+                            '</div>'+
+                        '</footer>'+
+                    '</main>'+
+                    '<aside class="articles-more">' +
                         '<ul class="article-tags">' +
                             '<li class="article-tag" v-for="tag in article.hashtag">{{ tag }}</li>' +
                         '</ul>' +
-                    '</section>'+
-                    '<footer>'+
-                        '<div class="article-links">' +
-                            '<a :href="this.article.url" target="_blank" rel="nofollow" class="article-link">Read the article</a>'+
-                            '<a v-if="article.medias.video" :href="this.article.medias.video" class="article-link">See the video</a>'+
-                        '</div>'+
-                    '</footer>'+
+                    '</aside>'+
                 '</div>'+
             '</article>'
         };
 
-    console.log(article);
     return new Vue({
         el: el,
         data: {
@@ -99,7 +102,6 @@ function initTimeline(el) {
  * function init Landing
  */
 function initLanding(id) {
-    console.groupCollapsed('landing');
     var opts = {
         duration: 50,
         file: '/assets/svg/landing.svg',
@@ -108,8 +110,6 @@ function initLanding(id) {
         reverseStack: true
     };
     var landing = new Vivus(id, opts);
-    console.log(landing);
     landing.play(2);
-    console.groupEnd()
 }
 
