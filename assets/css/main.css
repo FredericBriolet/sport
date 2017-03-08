@@ -12,15 +12,15 @@
 }
 
 @font-face {
-    font-family: 'Brown';
-    font-style: normal;
-    font-weight: 500;
-    src: url('../fonts/Brown-Bold.eot');
-    src: url('../fonts/Brown-Bold.eot?#iefix') format('embedded-opentype'),
-    url('../fonts/Brown-Bold.woff2') format('woff2'),
-    url('../fonts/Brown-Bold.woff') format('woff'),
-    url('../fonts/Brown-Bold.ttf') format('truetype'),
-    url('../fonts/Brown-Bold.svg#svgFontName') format('svg');
+  font-family: 'Brown';
+  font-style: normal;
+  font-weight: 700;
+  src: url('../fonts/Brown-Bold.eot');
+  src: url('../fonts/Brown-Bold.eot?#iefix') format('embedded-opentype'),
+       url('../fonts/Brown-Bold.woff2') format('woff2'),
+       url('../fonts/Brown-Bold.woff') format('woff'),
+       url('../fonts/Brown-Bold.ttf')  format('truetype'),
+       url('../fonts/Brown-Bold.svg#svgFontName') format('svg');
 }
 
 @font-face {
@@ -299,5 +299,4 @@ body {
     display: inline-block;
     margin-bottom: 3px;
 }
-
 /*@end TIMELINE*/
