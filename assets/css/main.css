@@ -14,7 +14,7 @@
 @font-face {
   font-family: 'Brown';
   font-style: normal;
-  font-weight: 500;
+  font-weight: 700;
   src: url('../fonts/Brown-Bold.eot');
   src: url('../fonts/Brown-Bold.eot?#iefix') format('embedded-opentype'),
        url('../fonts/Brown-Bold.woff2') format('woff2'),
@@ -203,7 +203,19 @@ body {
 
           .timeline-article.article-left .article-content header {
             color: #FFB199;
+          }
+
+          .timeline-article.article-left .article-content header,
+          .timeline-article.article-left .article-content footer {
             margin-left: 30%;
+          } 
+
+          .timeline-article.article-left .article-content .article-body .article-tags .article-tag {
+            padding-left: 0;
+            border-left: none;
+            padding-right: 0.625em;
+            border-right: 1px solid #FF0844;
+            text-align: right;
           }
 
         .timeline-article .article-content .article-body {
@@ -223,6 +235,64 @@ body {
             font-size: 1em;
             line-height: 1.2em;
             color: #4C4C4C;
+          }
+
+            .timeline-article .article-content .article-body .article-tags .article-tag {
+              font-size: 1.125em;
+              line-height: 1.350em;
+              font-weight: 300;
+              padding-left: 0.625em;
+              border-left: 1px solid #FF0844;
+            }
+
+
+        .timeline-article .article-content footer .article-links {
+          text-transform: uppercase;
+          font-size: 0.750em;
+          position: relative;
+          display: inline-block;
+        }
+
+          .timeline-article .article-content footer .article-links a,
+          .timeline-article .article-content footer .article-links a:active, 
+          .timeline-article .article-content footer .article-links a:visited {
+            text-decoration: none;
+            color: #FF0844;
+            padding-bottom: 3px;
+            transition: color 0.4s ease-in-out;
+          }
+
+          .timeline-article .article-content footer .article-links:hover a {
+            color: #FFB199;
+          }
+
+          .timeline-article .article-content footer .article-links:before,
+          .timeline-article .article-content footer .article-links:after {
+            content: "";
+            position: absolute;
+            display: block;
+            width: 100%;
+            height: 3px;
+            top: 100%;
+            left: 0;
+            transform: scaleX(1);
+            transform-origin: left center;
+            transition: transform 0.4s ease-in-out;
+            background-image: linear-gradient(to right, #ff0844 0%, #ffb199 100%);
+          }
+
+          .timeline-article .article-content footer .article-links:before {
+            transform: scaleX(0);
+            transition-delay: 0.2s;
+            transform-origin: right center;
+            background-image: linear-gradient(to left, #ff0844 0%, #ffb199 100%);
+          }
+
+          .timeline-article .article-content footer .article-links:hover:before {
+            transform: scaleX(1);
+          }
+          .timeline-article .article-content footer .article-links:hover:after {
+            transform: scaleX(0);
           }
 
       .timeline-article .article-more img {
