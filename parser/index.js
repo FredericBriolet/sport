@@ -8,6 +8,9 @@ const fs          = require('fs');
 const config      = require('./config/config');
 
 var csv;
+var monthNames = ["January", "February", "March", "April", "May", "June",
+    "July", "August", "September", "October", "November", "December"
+];
 
 //Create candidate "Database"
 csv = fs.readFileSync(config._IMPORT_PATH.timeline,'utf8');
@@ -46,8 +49,13 @@ function parseDate(date) {
         m = parseInt(dmy[1]),
         d = parseInt(dmy[0]);
     return {
+        time: new Date(y, m, d),
+        utc: Date.UTC(y, m, d),
         year: y,
-        month: m,
+        month: {
+            value: m,
+            name: monthNames[m - 1]
+        },
         day: d
     };
 }
@@ -56,8 +64,38 @@ function cleanText(txt) {
     return txt.trim().replace(/\s(:|;|%|€|\$|°C|°F|»|\!|\?|–)/, '&nbsp;$1');
 }
 
+var data_exports = [];
+timeline = timeline.sort(function (a, b) {
+    return a.date.time.getTime() < b.date.time.getTime() ? -1 : a.date.time.getTime() > b.date.time.getTime() ? 1 :0
+})
+console.log(timeline);
+var month_old = false, month;
+var tmp_month = [];
+var timeline_by_month = [];
+
+for(var i = 0; i < timeline.length; i++) {
+    month = timeline[i].date.month.value;
+    if(!month_old) {
+        month_old = month;
+    }
+
+    if(month === month_old) {
+        tmp_month.push(timeline[i])
+    } else {
+        timeline_by_month.push(tmp_month);
+        tmp_month = [];
+    }
+
+    month_old = month;
+
+
+
+    // console.log(timeline[i]);
+}
+// console.log(timeline);
+
 //Write Database on disk
-var data_to_write = 'TIMELINE      = '+ JSON.stringify(timeline)+';';
+var data_to_write = 'TIMELINE = '+ JSON.stringify(timeline_by_month)+';';
 
 fs.writeFile(config._EXPORT_PATH_DATA, data_to_write, (err) => {
     if (err) throw err;

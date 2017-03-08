@@ -65,10 +65,10 @@ function initTimeline(el) {
                     '<main>'+
                         '<header class="article-header" >'+
                             '<svg v-if="this.iconCategoryPath" class="icon article-category"><use :xlink:href="this.iconCategoryPath"/></svg>'+
-                            '<h1 class="article-title"> {{ article.title }}</h1>'+
+                            '<h2 class="article-title" v-html="this.article.title"></h2>'+
                         '</header>' +
                        '<section class="article-body">' +
-                            '<p class="article-desc">{{ article.description }}</p>'+
+                            '<p class="article-desc" v-html="this.article.description"></p>'+
                         '</section>'+
                         '<footer>'+
                             '<div class="article-links">' +
