@@ -67,10 +67,10 @@ function initTimeline(el) {
                         '<h1 class="article-title"> {{ article.title }}</h1>' +
                     '</header>' +
                    '<section class="article-body">' +
+                        '<p class="article-desc">{{ article.description }}</p>'+
                         '<ul class="article-tags">' +
                             '<li class="article-tag" v-for="tag in article.hashtag">{{ tag }}</li>' +
                         '</ul>' +
-                        '<p class="article-desc">{{ article.description }}</p>'+
                     '</section>'+
                     '<footer>'+
                         '<div class="article-links">' +
@@ -108,6 +108,7 @@ function initLanding(id) {
         reverseStack: true
     };
     var landing = new Vivus(id, opts);
+    console.log(landing);
     landing.play(2);
     console.groupEnd()
 }

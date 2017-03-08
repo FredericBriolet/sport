@@ -118,7 +118,6 @@ body {
             max-height: 50px;
           }
 
-
         .section-intro .categories-container .category .category-name {
           display: block;
           margin: 0 auto;
@@ -191,8 +190,40 @@ body {
 
           .timeline-article .article-content header svg{
             width: 25px;
+            height: 25px;
           }
 
+          .timeline-article .article-content header h1 {
+            max-width: 60%;
+            margin: 15px 0;
+            font-weight: 700;
+            font-size: 1.45em;
+            line-height: 1.35em;
+          }
+
+          .timeline-article.article-left .article-content header {
+            color: #FFB199;
+            margin-left: 30%;
+          }
+
+        .timeline-article .article-content .article-body {
+          display: flex;
+          flex-direction: row;
+          justify-content: space-between;
+          margin-bottom: 15px;
+        }
+
+          .timeline-article.article-left .article-content .article-body {
+            flex-direction: row-reverse;
+          }
+
+          .timeline-article .article-content .article-body p {
+            width: 70%;
+            font-weight: 200;
+            font-size: 1em;
+            line-height: 1.2em;
+            color: #4C4C4C;
+          }
 
       .timeline-article .article-more img {
           max-width: 50px;
