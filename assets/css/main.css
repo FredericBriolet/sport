@@ -89,6 +89,10 @@ body {
     margin: 0 auto;
 }
 
+  .section-intro .section-intro-text b {
+    text-decoration: underline;
+  }
+
 .section-intro .categories-container {
     width: 100%;
     margin: 40px auto;
