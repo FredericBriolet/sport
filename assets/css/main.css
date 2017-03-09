@@ -189,10 +189,11 @@ body {
     }
 
 .timeline-container-month .timeline-article {
+    position: relative;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-start;
     flex-wrap: nowrap;
     width: 100%;
     margin-bottom: 5.5em;
@@ -200,6 +201,40 @@ body {
 
 .timeline-container-month .timeline-article:last-child {
     /*margin: 0;*/
+}
+
+.timeline-article .article-date {
+    position: absolute;
+    top: 45px;
+    left: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 60px;
+    height: 60px;
+    font-family: 'Brown', Helvetica Neue, Helvetica, sans-serif;
+    font-weight: 700;
+    font-size: 1.45em;
+    line-height: 1.45em;
+    border: 1px solid #FF0844;
+    border-radius: 50%;
+    background-color: #ffffff;
+    transform: translateX(-50%);
+}
+
+.timeline-article.article-left .article-date {
+    border-color: #FFB199;
+    color: #FFB199;
+}
+
+.timeline-article .article-date span {
+    display: inline-block;
+    margin-top: 8px;
+    margin-left: 3px;
+}
+
+.timeline-article .article-date sup {
+    font-size: 0.75em;
 }
 
 .timeline-article .article-img-container,
@@ -246,12 +281,15 @@ body {
 }
 
 .timeline-article .article-content .article-header h2{
-    max-width: 60%;
+    max-width: 70%;
+    /*max-height: 2.7em;*/
     margin: 15px 0;
     font-weight: 700;
     font-size: 1.45em;
     line-height: 1.35em;
+    /*overflow: hidden;*/
 }
+
 
 .timeline-article.article-left .article-content .article-header {
     color: #FFB199;
@@ -299,6 +337,19 @@ body {
     width: 100%;
     height: 3px;
     background-image: linear-gradient(to right, #ff0844 0%, #ffb199 100%);;
+}
+
+.timeline-article .article-img-container {
+    text-align: right;
+}
+
+.timeline-article.article-left .article-img-container {
+    text-align: left;
+}
+
+.timeline-article .article-img-container img {
+    max-width: 450px;
+    padding-top: 50px;
 }
 
 .timeline-article .articles-more .article-tags{

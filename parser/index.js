@@ -92,6 +92,8 @@ for(var i = 0; i < timeline.length; i++) {
 
     // console.log(timeline[i]);
 }
+timeline_by_month.push(tmp_month);
+
 // console.log(timeline);
 
 //Write Database on disk
