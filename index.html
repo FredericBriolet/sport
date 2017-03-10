@@ -69,11 +69,13 @@
     </section>
     <section id="section-timeline" class="section-timeline">
         <div class="timeline-container">
-            <div class="timeline-container-month" v-for="(articlesByMonth, index) in articles">
-                <header class="month-title">
-                    <h1>{{ articlesByMonth[0].date.month.name }}</h1>
-                </header>
-                <article-component v-for="(article, index) in articlesByMonth" :index="index" :article="article"></article-component>
+            <div :in-viewport-offset-top="-300"  class="timeline-container-month" v-for="(articlesByMonth, index) in articles">
+                <transition name="transition-article-grow" appear>
+                    <header v-if="visibleComputed" class="month-title">
+                        <h1>{{ articlesByMonth[0].date.month.name }}</h1>
+                    </header>
+                </transition>
+                <article-component :in-viewport-offset-top="-200" :in-viewport-once='true' v-for="(article, index) in articlesByMonth" :index="index" :article="article"></article-component>
             </div>
         </div>
     </section>
