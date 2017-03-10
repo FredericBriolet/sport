@@ -24,8 +24,6 @@ function init() {
     var section_end = document.getElementById('pos-end');
 
     window.addEventListener('scroll', function (e) {
-        console.log(follow_pos);
-
         var pos = (window.pageYOffset !== undefined) ? window.pageYOffset : (document.documentElement || document.body.parentNode || document.body).scrollTop;
         // console.log(pos);
         var end = section_end.getBoundingClientRect().top - document.body.getBoundingClientRect().top;
@@ -176,7 +174,6 @@ function initApp(el) {
             },
             imgTransition: function () {
                 var self = this;
-                console.log(self.index % 2)
                 return self.index % 2 === 0 ? 'transition-article-image-slide-right' : 'transition-article-image-slide-left';
             },
             enabledArticle: function () {
@@ -386,6 +383,8 @@ function initApp(el) {
  * function init Landing
  */
 function initLanding(id) {
+    var baseline = document.getElementById('landing-base-line');
+
     var opts = {
         duration: 50,
         file: 'assets/svg/landing.svg',
@@ -393,8 +392,10 @@ function initLanding(id) {
         animTimingFunction: Vivus.EASE,
         reverseStack: true
     };
-    var landing = new Vivus(id, opts);
-    landing.play(2);
+    var landing = new Vivus(id, opts , function () {
+        baseline.classList.add('animate')
+    });
+
 }
 
 
