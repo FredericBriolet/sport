@@ -228,8 +228,8 @@ function initApp(el) {
         '</transition>' +
         '<div class="article-img-container">' +
         '<transition :name="imgTransition">' +
-            '<img v-show="article.medias.image && !article.medias.video && visible" class="article-image" :src="this.article.medias.image" :alt="this.article.title">' +
-            '<video controls="controls" v-show="article.medias.video && visible" class="article-image" :src="this.article.medias.video"></video>' +
+            '<img v-show="article.medias.image && visible" class="article-image" :src="this.article.medias.image" :alt="this.article.title">' +
+            // '<video controls="controls" v-show="article.medias.video && visible" class="article-image" :src="this.article.medias.video"></video>' +
         '</transition>' +
         '</div>' +
         '<div class="article-content" >' +
@@ -245,7 +245,7 @@ function initApp(el) {
         '<footer>' +
         '<div class="article-links">' +
         '<a :href="this.article.url" target="_blank" rel="nofollow" class="article-link">Read the article</a>' +
-        '<a v-show="article.medias.video" :href="this.article.medias.video" class="article-link">See the video</a>' +
+        // '<a v-show="article.medias.video" :href="this.article.medias.video" class="article-link">See the video</a>' +
         '</div>' +
         '</footer>' +
         '</main>' +
