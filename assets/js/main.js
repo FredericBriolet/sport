@@ -245,7 +245,7 @@ function initApp(el) {
         '<footer>' +
         '<div class="article-links">' +
         '<a :href="this.article.url" target="_blank" rel="nofollow" class="article-link">Read the article</a>' +
-        // '<a v-show="article.medias.video" :href="this.article.medias.video" class="article-link">See the video</a>' +
+        '<a v-show="article.medias.video" :href="this.article.medias.video" class="article-link" target="_blank">See the video</a>' +
         '</div>' +
         '</footer>' +
         '</main>' +

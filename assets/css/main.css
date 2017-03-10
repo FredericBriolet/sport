@@ -725,7 +725,9 @@ main > section {
 }
 
 .timeline-article .article-content footer .article-links a {
+    position: relative;
     display: inline-block;
+    margin-right: 20px;
     color: #ff0844;
     text-decoration: none;
     padding: 0 2px;
@@ -748,11 +750,11 @@ main > section {
     background-image: linear-gradient(to right, #ff0844 0%, #ffb199 100%);;
 }
 
-.timeline-article .article-content footer .article-links:hover a {
+.timeline-article .article-content footer .article-links a:hover {
     color: #f5f7f7;
 }
 
-.timeline-article .article-content footer .article-links:hover a::after {
+.timeline-article .article-content footer .article-links a:hover::after {
     transform: rotate(180deg) scaleY(1.9) scaleX(1.1);
 }
 
@@ -800,6 +802,7 @@ main > section {
 .timeline-article .articles-more .article-tags li {
     display: inline-block;
     margin-bottom: 3px;
+    width: 100%;
 }
 
 /*@group TRANSITIONS*/
