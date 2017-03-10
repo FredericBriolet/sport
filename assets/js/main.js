@@ -132,7 +132,10 @@ function initTimeline(el) {
     var article = {
         props: {
             article: Object,
-            index: Number
+            index: Number,
+        },
+        data: {
+            categoryClass: ''
         },
         data: {
             // visible: false
@@ -156,23 +159,24 @@ function initTimeline(el) {
                 var path = false;
                 switch (self.article.category.name) {
                     case 'Connected Sports Gear':
-                        path = svg_sprite_path + 'connected';
+                        self.categoryClass = "connected";
                         break;
                     case 'VR':
-                        path = svg_sprite_path + 'vr';
+                        self.categoryClass = "vr";
                         break;
                     case 'Interactive Experiences':
-                        path = svg_sprite_path + 'interactive';
+                        self.categoryClass = 'interactive';
                         break;
                     case 'E-Sport':
-                        path = svg_sprite_path + 'esport';
+                        self.categoryClass = 'esport';
                         break;
                     case 'App':
-                        path = svg_sprite_path + 'mobile';
+                        self.categoryClass = 'mobile';
                         break;
                     default:
                         break;
                 }
+                path = svg_sprite_path + self.categoryClass;
                 return path;
             }
         },
@@ -190,7 +194,7 @@ function initTimeline(el) {
         '<transition name="transition-article-content">' +
         '<main v-if="visible" >' +
         '<header class="article-header" >' +
-        '<svg v-if="this.iconCategoryPath" class="icon article-category"><use :xlink:href="this.iconCategoryPath"/></svg>' +
+        '<svg v-if="this.iconCategoryPath" class="icon article-category" :class="this.categoryClass"><use :xlink:href="this.iconCategoryPath"/></svg>' +
         '<h2 class="article-title" v-html="this.article.title"></h2>' +
         '</header>' +
         '<section class="article-body">' +
@@ -240,7 +244,7 @@ function initTimeline(el) {
 function initLanding(id) {
     var opts = {
         duration: 50,
-        file: '/assets/svg/landing.svg',
+        file: 'assets/svg/landing.svg',
         type: 'scenario',
         animTimingFunction: Vivus.EASE,
         reverseStack: true
