@@ -357,6 +357,10 @@ main > section {
     width: 25%;
 }
 
+.timeline-article.article-left .article-content aside {
+  flex-direction: row-reverse;
+}
+
 .timeline-article .article-content .article-header {
 
 }
