@@ -1,10 +1,29 @@
 @media print {
-  .section-timeline .timeline-container-month::before {
-    left: 0;
+
+  p, img {
+      page-break-before: auto;
+      page-break-after: auto; 
+      page-break-inside: avoid;
+      display: block;
   }
 
-  .timeline-article .article-date {
+  .svg-landing path {
+    stroke-dasharray: 1000, 1000 !important;
+    stroke-dashoffset: 0 !important;
+  }
+
+  .section-timeline::before {
     left: 0;
+    display: none;
+  }
+
+  .timeline-article {
+    page-break-inside: avoid;
+  }
+
+  .timeline-article div.article-date {
+    display: flex !important;
+    left: 40px;
   }
 
   .timeline-article .article-content {
@@ -22,6 +41,7 @@
     padding-top: 0;
     width: 100%;
     height: auto;
+    display: inline-block !important;
   }
 
   .timeline-article .articles-more {
@@ -29,14 +49,41 @@
     left: 50%;
   }
 
-  .timeline-container-month .timeline-article {
+  .section-timeline .timeline-container {
+    position: relative;
+  }
+
+  .section-intro .categories-container {
+    max-width: 100% !important;
+    left: initial !important;
+    top: initial !important;
+    transform: none !important;
+    width: 100% !important;
+    margin: 40px auto !important;
+    padding: 0px !important;
+    display: flex !important;
+    position: relative !important; 
+  }
+
+  .timeline-container-month div.timeline-article {
     margin-bottom: 60px;
     page-break-inside: avoid;
+    display: flex !important;
   }
 
   .timeline-article .article-content main {
     width: 100% !important;
+    display: block !important;
     padding-left: 50px;
+    position: relative;
+    page-break-inside: avoid;
+  }
+
+  .timeline-article .article-content main p,
+  .timeline-article .article-content main svg,
+  .timeline-article .article-content main h2 {
+    position: relative;
+    page-break-inside: avoid;
   }
 
   .section-timeline .timeline-container .month-title {
