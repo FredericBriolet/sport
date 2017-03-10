@@ -3,9 +3,9 @@
 // user test : ab6f35b0-fcd3-11e6-a5cc-0d202563c14f
 
 //Globals variables
-const csvToArray  = require('./lib/csvToarray.min');
-const fs          = require('fs');
-const config      = require('./config/config');
+const csvToArray = require('./lib/csvToarray.min');
+const fs = require('fs');
+const config = require('./config/config');
 
 var csv;
 var monthNames = ["January", "February", "March", "April", "May", "June",
@@ -13,33 +13,59 @@ var monthNames = ["January", "February", "March", "April", "May", "June",
 ];
 
 //Create candidate "Database"
-csv = fs.readFileSync(config._IMPORT_PATH.timeline,'utf8');
+csv = fs.readFileSync(config._IMPORT_PATH.timeline, 'utf8');
 var data = csvToArray.CSVTOARRAY(csv);
 var timeline = []
 console.log(timeline);
 
 
-for(var i = 1; i < data.length; i++) {
-    if(data[i][0].length > 0) {
+for (var i = 1; i < data.length; i++) {
+    if (data[i][0].length > 0) {
         var item = {
             id: i,
             title: cleanText(data[i][0]),
             category: {
+                index: getIndexCategory(cleanText(data[i][1])),
                 name: cleanText(data[i][1]),
                 // todo: parse color from category
                 color: '#0000ff'
             },
-            hashtag: data[i][2].length > 0 ? data[i][2].split(" "): null,
+            hashtag: data[i][2].length > 0 ? data[i][2].split(" ") : null,
             description: cleanText(data[i][3]),
             date: parseDate(data[i][4]),
             url: data[i][5],
             medias: {
-                image: data[i][6].length > 0 ? data[i][6]: null,
-                video: data[i][7].length > 0 ? data[i][7]: null
+                image: data[i][6].length > 0 ? data[i][6] : null,
+                video: data[i][7].length > 0 ? data[i][7] : null
             }
         };
         timeline.push(item);
-        console.log(item);
+    }
+}
+function getIndexCategory(cat) {
+    var id = 0;
+    console.log(cat);
+    switch (cat) {
+        case 'Connected Sports Gear':
+            return 0;
+            break;
+        case 'VR':
+            return 3;
+            break;
+        case 'Interactive Experiences':
+            return 4;
+            break;
+        case 'E-Sport':
+            return 2;
+            break;
+        case 'App':
+            return 1;
+            self.categoryClass = 'mobile';
+            break;
+        default:
+            return 0;
+            break;
+
     }
 }
 
@@ -66,20 +92,20 @@ function cleanText(txt) {
 
 var data_exports = [];
 timeline = timeline.sort(function (a, b) {
-    return a.date.time.getTime() < b.date.time.getTime() ? -1 : a.date.time.getTime() > b.date.time.getTime() ? 1 :0
+    return a.date.time.getTime() < b.date.time.getTime() ? -1 : a.date.time.getTime() > b.date.time.getTime() ? 1 : 0
 })
-console.log(timeline);
+// console.log(timeline);
 var month_old = false, month;
 var tmp_month = [];
 var timeline_by_month = [];
 
-for(var i = 0; i < timeline.length; i++) {
+for (var i = 0; i < timeline.length; i++) {
     month = timeline[i].date.month.value;
-    if(!month_old) {
+    if (!month_old) {
         month_old = month;
     }
 
-    if(month === month_old) {
+    if (month === month_old) {
         tmp_month.push(timeline[i])
     } else {
         timeline_by_month.push(tmp_month);
@@ -89,7 +115,6 @@ for(var i = 0; i < timeline.length; i++) {
     month_old = month;
 
 
-
     // console.log(timeline[i]);
 }
 timeline_by_month.push(tmp_month);
@@ -97,9 +122,10 @@ timeline_by_month.push(tmp_month);
 // console.log(timeline);
 
 //Write Database on disk
-var data_to_write = 'TIMELINE = '+ JSON.stringify(timeline_by_month)+';';
+var data_to_write = 'TIMELINE = ' + JSON.stringify(timeline_by_month) + ';';
 
 fs.writeFile(config._EXPORT_PATH_DATA, data_to_write, (err) => {
     if (err) throw err;
-    console.log('Data saved!');
-});
+console.log('Data saved!');
+})
+;

@@ -14,68 +14,22 @@
     <section class="section-landing">
         <div id="svg-landing" class="svg-landing"></div>
     </section>
+    <div id="app">
     <section class="section-intro">
         <div class="section-intro-inner">
             <p class="section-intro-text"><b>Recent news about Sport Technology</b><br/>We watched the latest innovations about
                 Sport from september 2016 to march 2017, with the objective of sharing what's going on in this domain,
                 what will it become in the future and what people think about it.<br/>We divided the news in 5
                 categories :</p>
-            <ul class="categories-container">
-                <li class="category">
-                    <div class="category-icon category-icon--connected">
-                        <svg class="icon">
-                            <use xlink:href="assets/img/symbol.svg#connected"/>
-                        </svg>
-                    </div>
-                    <p class="category-name">Connected Devices</p>
-                </li><!--
-          -->
-                <li class="category">
-                    <div class="category-icon category-icon--mobile">
-                        <svg class="icon">
-                            <use xlink:href="assets/img/symbol.svg#mobile"/>
-                        </svg>
-                    </div>
-                    <p class="category-name">Mobile<br/>Apps</p>
-                </li><!--
-          -->
-                <li class="category">
-                    <div class="category-icon category-icon--esport">
-                        <svg class="icon">
-                            <use xlink:href="assets/img/symbol.svg#esport"/>
-                        </svg>
-                    </div>
-                    <p class="category-name">E-Sport</p>
-                </li><!--
-          -->
-                <li class="category">
-                    <div class="category-icon category-icon--vr">
-                        <svg class="icon">
-                            <use xlink:href="assets/img/symbol.svg#vr"/>
-                        </svg>
-                    </div>
-                    <p class="category-name">Virtual Reality</p>
-                </li><!--
-          -->
-                <li class="category">
-                    <div class="category-icon category-icon--interactive">
-                        <svg class="icon">
-                            <use xlink:href="assets/img/symbol.svg#interactive"/>
-                        </svg>
-                    </div>
-                    <p class="category-name">Interactive Experiences</p>
-                </li>
-            </ul>
+            <transition-group name="categories-list" class="categories-container" :class="fixedCategoriesClasses" tag="ul">
+                <category-component v-for="(category, index) in categories" :category="category" :index="index" :key="category.index"></category-component>
+            </transition-group>
         </div>
     </section>
     <section id="section-timeline" class="section-timeline">
         <div class="timeline-container">
             <div :in-viewport-offset-top="-300"  class="timeline-container-month" v-for="(articlesByMonth, index) in articles">
-                <transition name="transition-article-grow" appear>
-                    <header v-if="visibleComputed" class="month-title">
-                        <h1>{{ articlesByMonth[0].date.month.name }}</h1>
-                    </header>
-                </transition>
+                <month-component :month="articlesByMonth[0].date.month.name"></month-component>
                 <article-component :in-viewport-offset-top="-200" :in-viewport-once='true' v-for="(article, index) in articlesByMonth" :index="index" :article="article"></article-component>
             </div>
         </div>
@@ -88,6 +42,7 @@
             Project made with sweat by Sandy, Antonin, Paul & Fred ✌️
         </div>
     </section>
+    </div>
 </main>
 
 </body>

@@ -96,8 +96,8 @@ main > section {
 .section-intro .section-intro-text {
     font-size: 1.125em;
     line-height: 138%;
-    max-width: 500px;
     width: 100%;
+    max-width: 500px;
     margin: 0 auto;
 }
 
@@ -108,8 +108,36 @@ main > section {
 .section-intro .categories-container {
     width: 100%;
     margin: 40px auto;
+    padding: 0px;
     display: flex;
 }
+
+.section-intro .categories-container.fixed {
+    position: fixed;
+    top: 0;
+    left: 50%;
+    width: 100%;
+    max-width: 550px;
+    margin: 0 auto;
+    padding: 5px;
+    transition: max-width .25s ease-out, padding .25s ease;
+    transform: translateX(-50%);
+    background-color: #FFF7F5;
+    z-index: 2;
+}
+
+.section-intro .categories-container.fixed::before {
+    content: "";
+    position: absolute;
+    width: 100vw;
+    top: 0;
+    left: 50%;
+    bottom: 0;
+    background-color: #FFF7F5;
+    transform: translateX(-50%);
+}
+
+
 
 .section-intro .categories-container .category {
     position: relative;
@@ -118,6 +146,11 @@ main > section {
     display: inline-block;
     vertical-align: top;
     padding: 0;
+}
+
+.section-intro .categories-container.fixed .category {
+    font-size: .75em;
+    transition: font-size .25s ease-in;
 }
 
 .section-intro .categories-container .category .category-icon {
@@ -133,6 +166,12 @@ main > section {
     max-width: 50px;
 }
 
+.section-intro .categories-container.fixed .category .category-icon .icon {
+    max-height: 25px;
+    max-width: 25px;
+    transition: max-width .35s ease .25s, max-height .35s ease .25s;
+}
+
   .section-intro .categories-container .category .category-icon.category-icon--interactive .icon {
     max-width: 40px;
   }
@@ -142,6 +181,8 @@ main > section {
     margin: 0 auto;
     max-width: 90%;
 }
+
+/*Transitions*/
 
 @media (max-width: 500px) {
     .section-intro {
@@ -167,8 +208,21 @@ main > section {
 
 /*@group TIMELINE*/
 .section-timeline {
+    position: relative;
     display: flex;
     padding: 5.6em 5.6%;
+}
+
+.section-timeline::before {
+    content: '';
+    position: absolute;
+    width: 1px;
+    top: 5.6em;
+    left: 50%;
+    bottom: 5.6em;
+    transform-origin: 50% 50%;
+    transform: translateX(-50%);
+    background-image: linear-gradient(to bottom, #ff0844 0%, #ffb199 100%);
 }
 
 .section-timeline .timeline-container {
@@ -182,17 +236,17 @@ main > section {
     flex-direction: column;
 }
 
-    .section-timeline .timeline-container-month::before {
-        content: '';
-        position: absolute;
-        width: 1px;
-        top: 0;
-        left: 50%;
-        bottom: 0;
-        transform-origin: 50% 50%;
-        transform: translateX(-50%);
-        background-image: linear-gradient(to bottom, #ff0844 0%, #ffb199 100%);
-    }
+    /*.section-timeline .timeline-container-month::before {*/
+        /*content: '';*/
+        /*position: absolute;*/
+        /*width: 1px;*/
+        /*top: 0;*/
+        /*left: 50%;*/
+        /*bottom: 0;*/
+        /*transform-origin: 50% 50%;*/
+        /*transform: translateX(-50%);*/
+        /*background-image: linear-gradient(to bottom, #ff0844 0%, #ffb199 100%);*/
+    /*}*/
 
     .section-timeline .timeline-container .month-title {
         text-align: center;

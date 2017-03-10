@@ -4,7 +4,7 @@
  * Globals params
  */
 var landing_id = 'svg-landing';
-var timeLine_id = '#section-timeline';
+var app_id = '#app';
 var svg_sprite_path = 'assets/img/symbol.svg#';
 //Run Js
 window.onload = init;
@@ -15,12 +15,12 @@ window.onload = init;
  *
  */
 function init() {
-    console.log('init');
     initLanding(landing_id);
-    var timeline = initTimeline(timeLine_id);
+    var app = initApp(app_id);
 }
 
-function initTimeline(el) {
+function initApp(el) {
+    //Mixins
     var inViewPort = {
         props: {
             inViewportActive: {
@@ -129,10 +129,12 @@ function initTimeline(el) {
             }
         }
     };
-    var article = {
+
+    //Components
+    var articleComponent = {
         props: {
             article: Object,
-            index: Number,
+            index: Number
         },
         data: {
             categoryClass: ''
@@ -142,7 +144,18 @@ function initTimeline(el) {
             visible: function () {
                 var self = this;
                 return self.inViewport.now;
-
+            },
+            enabledArticle: function () {
+              var self = this;
+              var parent = self.$parent;
+              if(parent.$data.activeCategories.length === 0) {
+                  return true;
+              }
+              if(parent.$data.activeCategories.indexOf(self.article.category.index) > -1) {
+                  return true
+              } else {
+                  return false;
+              }
             },
             offset: function () {
                 return -window.innerHeight + 75
@@ -178,9 +191,9 @@ function initTimeline(el) {
             }
         },
         template: '' +
-        '<article class="timeline-article" :class="this.switchPosition">' +
+        '<article v-show="enabledArticle" class="timeline-article" :class="this.switchPosition">' +
         '<transition name="transition-article-date">' +
-        '<div v-if="visible" class="article-date"><span class="date">{{ article.date.day }}<sup>th</sup></span></div>' +
+        '<div v-show="visible" class="article-date"><span class="date">{{ article.date.day }}<sup>th</sup></span></div>' +
         '</transition>' +
         '<div class="article-img-container">' +
         '<transition name="transition-article-image-slide">' +
@@ -189,9 +202,9 @@ function initTimeline(el) {
         '</div>' +
         '<div class="article-content" >' +
         '<transition name="transition-article-content">' +
-        '<main v-if="visible" >' +
+        '<main v-show="visible" >' +
         '<header class="article-header" >' +
-        '<svg v-if="this.iconCategoryPath" class="icon article-category" :class="this.categoryClass"><use :xlink:href="this.iconCategoryPath"/></svg>' +
+        '<svg v-show="this.iconCategoryPath" class="icon article-category" :class="this.categoryClass"><use :xlink:href="this.iconCategoryPath"/></svg>' +
         '<h2 class="article-title" v-html="this.article.title"></h2>' +
         '</header>' +
         '<section class="article-body">' +
@@ -200,38 +213,138 @@ function initTimeline(el) {
         '<footer>' +
         '<div class="article-links">' +
         '<a :href="this.article.url" target="_blank" rel="nofollow" class="article-link">Read the article</a>' +
-        '<a v-if="article.medias.video" :href="this.article.medias.video" class="article-link">See the video</a>' +
+        '<a v-show="article.medias.video" :href="this.article.medias.video" class="article-link">See the video</a>' +
         '</div>' +
         '</footer>' +
         '</main>' +
         '</transition>' +
         '<aside class="articles-more">' +
         '<transition v-if="visible"  name="transition-article-aside">' +
-            '<ul class="article-tags">' +
-            '<li class="article-tag" v-for="tag in article.hashtag">{{ tag }}</li>' +
-            '</ul>' +
+        '<ul class="article-tags">' +
+        '<li class="article-tag" v-for="tag in article.hashtag">{{ tag }}</li>' +
+        '</ul>' +
         '</transition>' +
         '</aside>' +
         '</div>' +
         '</article>'
     };
-
+    var categoryComponent = {
+        props: {
+            index: Number,
+            category: Object
+        },
+        mixins: [inViewPort],
+        computed: {
+            iconClasses: function () {
+                var self = this;
+                return "category-icon category-icon--" + self.category.icon;
+            },
+            iconCategoryPath: function () {
+                var self = this;
+                return svg_sprite_path + self.category.icon;
+            },
+            visible: function () {
+                var self = this;
+                if (self.inViewport.above) {
+                    self.$parent.$parent.$data.fixedCategories = true;
+                } else {
+                    self.$parent.$parent.$data.fixedCategories = false;
+                }
+                // return self.inViewport.above;
+                console.log('This component is ' + ( self.inViewport.fully ? 'in-viewport' : 'hidden'));
+                return self.inViewport.fully || self.inViewport.above;
+            }
+        },
+        methods: {
+          toggleCategory:function () {
+              console.log('click')
+              var self = this;
+              var parent = self.$parent.$parent;
+              var index = parent.$data.activeCategories.indexOf(self.category.index);
+              if(index === -1) {
+                  parent.$data.activeCategories.push(self.category.index);
+              } else {
+                  parent.$data.activeCategories.splice(index, 1);
+              }
+          }
+        },
+        template: '<li @click="toggleCategory" v-show="visible" class="category">' +
+        '<div :class="this.iconClasses">' +
+        '<svg class="icon" >' +
+        '<use :xlink:href="this.iconCategoryPath" />' +
+        '</svg>' +
+        '</div>' +
+        '<p class="category-name" v-html="this.category.name"></p>' +
+        '</li><!--' +
+        '-->'
+    };
+    var monthComponent = {
+        props: {
+            month: String
+        },
+        computed: {
+            visibleComputed: function () {
+                var self = this;
+                return self.inViewport.now;
+            }
+        },
+        mixins: [inViewPort],
+        template: '<transition name="transition-article-grow">' +
+        '<header v-show="visibleComputed" class="month-title">' +
+        '<h1>{{ month }}</h1>' +
+        '</header>' +
+        '</transition>'
+    };
     return new Vue({
         el: el,
         data: {
             articles: TIMELINE,
-            visible: false
+            fixedCategories: false,
+            activeCategories: [],
+            categories: {
+                0: {
+                    index: 0,
+                    name: 'Connected Devices',
+                    icon: 'connected'
+                },
+                1: {
+                    index: 1,
+                    name: 'Mobile<br/>Apps',
+                    icon: 'mobile'
+                },
+                2: {
+                    index: 2,
+                    name: 'E-Sport',
+                    icon: 'esport'
+                },
+                3: {
+                    index: 3,
+                    name: 'Virtual Reality',
+                    icon: 'vr'
+                },
+                4: {
+                    index: 4,
+                    name: 'Interactive Experiences',
+                    icon: 'interactive'
+                }
+            }
         },
         mixins: [inViewPort],
         computed: {
+            fixedCategoriesClasses: function () {
+                var self = this;
+                console.log('fixedCategoriesClasses')
+                return self.fixedCategories ? 'fixed' : '';
+            },
             visibleComputed: function () {
                 var self = this;
-                console.log('computed')
                 return self.inViewport.now;
             }
         },
         components: {
-            'article-component': article
+            'article-component': articleComponent,
+            'category-component': categoryComponent,
+            'month-component': monthComponent
         }
     });
 
@@ -251,4 +364,5 @@ function initLanding(id) {
     var landing = new Vivus(id, opts);
     landing.play(2);
 }
+
 
