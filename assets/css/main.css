@@ -467,14 +467,17 @@ main > section {
 .timeline-article.article-left .transition-article-image-slide-enter {
     opacity: 0;
     margin-left: 80%;
+    transform-origin: 50% 50%;
     transform: scale(.85);
+    filter: blur(15px) grayscale(75%);
 
 }
 .timeline-article.article-right .transition-article-image-slide-enter {
     opacity: 0;
     margin-right: 80%;
+    transform-origin: 50% 50%;
     transform: scale(.85);
-    filter: blur(25px) grayscale(50%);
+    filter: blur(15px) grayscale(75%);
 }
 
 .transition-article-image-slide-leave-to {
