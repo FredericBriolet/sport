@@ -17,6 +17,33 @@ window.onload = init;
 function init() {
     initLanding(landing_id);
     var app = initApp(app_id);
+    var categories_container = document.getElementById('categories-container');
+    var categories_parent_container = document.getElementById('categories-container-parent');
+    var follow_pos = window.innerHeight + categories_parent_container.getBoundingClientRect().top - document.body.getBoundingClientRect().top;
+    var cat_top = categories_container.getBoundingClientRect().top - document.body.getBoundingClientRect().top;
+    var section_end = document.getElementById('pos-end');
+
+    window.addEventListener('scroll', function (e) {
+        var pos = (window.pageYOffset !== undefined) ? window.pageYOffset : (document.documentElement || document.body.parentNode || document.body).scrollTop;
+        // console.log(pos);
+        var end = section_end.getBoundingClientRect().top - document.body.getBoundingClientRect().top;
+        // if(pos >= cat_top && pos <= follow_pos) {
+        //     console.log('ici');
+        //     categories_container.classList.add('follow');
+        //     categories_container.classList.remove('fixed');
+        //     categories_container.style.top = pos +'px';
+        // }
+        // else
+            if(pos >= cat_top && pos <= end) {
+            categories_container.classList.add('fixed');
+            // categories_container.classList.remove('follow');
+
+        } else {
+            categories_container.classList.remove('fixed');
+            // categories_container.classList.remove('follow');
+        }
+
+    });
 }
 
 function initApp(el) {
@@ -145,17 +172,21 @@ function initApp(el) {
                 var self = this;
                 return self.inViewport.now;
             },
+            imgTransition: function () {
+                var self = this;
+                return self.index % 2 === 0 ? 'transition-article-image-slide-right' : 'transition-article-image-slide-left';
+            },
             enabledArticle: function () {
-              var self = this;
-              var parent = self.$parent;
-              if(parent.$data.activeCategories.length === 0) {
-                  return {opacity: 1};
-              }
-              if(parent.$data.activeCategories.indexOf(self.article.category.index) > -1) {
-                  return {opacity: 1};
-              } else {
-                  return {opacity: .25, filter: 'blur(20px)'};
-              }
+                var self = this;
+                var parent = self.$parent;
+                if (parent.$data.activeCategories.length === 0) {
+                    return {opacity: 1};
+                }
+                if (parent.$data.activeCategories.indexOf(self.article.category.index) > -1) {
+                    return {opacity: 1};
+                } else {
+                    return {opacity: .25, filter: 'blur(20px)'};
+                }
             },
             offset: function () {
                 return -window.innerHeight + 75
@@ -196,8 +227,9 @@ function initApp(el) {
         '<div v-show="visible" class="article-date"><span class="date">{{ article.date.day }}<sup>th</sup></span></div>' +
         '</transition>' +
         '<div class="article-img-container">' +
-        '<transition name="transition-article-image-slide">' +
-        '<img v-show="article.medias.image && visible" class="article-image" :src="this.article.medias.image" :alt="this.article.title">' +
+        '<transition :name="imgTransition">' +
+            '<img v-show="article.medias.image && visible" class="article-image" :src="this.article.medias.image" :alt="this.article.title">' +
+            // '<video controls="controls" v-show="article.medias.video && visible" class="article-image" :src="this.article.medias.video"></video>' +
         '</transition>' +
         '</div>' +
         '<div class="article-content" >' +
@@ -213,7 +245,7 @@ function initApp(el) {
         '<footer>' +
         '<div class="article-links">' +
         '<a :href="this.article.url" target="_blank" rel="nofollow" class="article-link">Read the article</a>' +
-        '<a v-show="article.medias.video" :href="this.article.medias.video" class="article-link">See the video</a>' +
+        // '<a v-show="article.medias.video" :href="this.article.medias.video" class="article-link">See the video</a>' +
         '</div>' +
         '</footer>' +
         '</main>' +
@@ -231,7 +263,8 @@ function initApp(el) {
     var categoryComponent = {
         props: {
             index: Number,
-            category: Object
+            category: Object,
+            classSelected: ''
         },
         mixins: [inViewPort],
         computed: {
@@ -243,32 +276,29 @@ function initApp(el) {
                 var self = this;
                 return svg_sprite_path + self.category.icon;
             },
-            visible: function () {
+            above: function () {
                 var self = this;
-                if (self.inViewport.above) {
-                    self.$parent.$parent.$data.fixedCategories = true;
-                } else {
-                    self.$parent.$parent.$data.fixedCategories = false;
-                }
-                // return self.inViewport.above;
-                console.log('This component is ' + ( self.inViewport.fully ? 'in-viewport' : 'hidden'));
-                return self.inViewport.fully || self.inViewport.above;
+                self.$parent.$parent.$data.fixedCategories = !!self.inViewport.above;
+                return self.inViewport.above
             }
         },
         methods: {
-          toggleCategory:function () {
-              console.log('click')
-              var self = this;
-              var parent = self.$parent.$parent;
-              var index = parent.$data.activeCategories.indexOf(self.category.index);
-              if(index === -1) {
-                  parent.$data.activeCategories.push(self.category.index);
-              } else {
-                  parent.$data.activeCategories.splice(index, 1);
-              }
-          }
+            toggleCategory: function () {
+                var self = this;
+                if (self.$parent.$el.classList.contains('fixed')) {
+                    var parent = self.$parent.$parent;
+                    var index = parent.$data.activeCategories.indexOf(self.category.index);
+                    if (index === -1) {
+                        parent.$data.activeCategories.push(self.category.index);
+                        self.classSelected = 'selected'
+                    } else {
+                        parent.$data.activeCategories.splice(index, 1);
+                        self.classSelected = ''
+                    }
+                }
+            }
         },
-        template: '<li @click="toggleCategory" v-show="visible" class="category">' +
+        template: '<li @click="toggleCategory" class="category" :class="classSelected">' +
         '<div :class="this.iconClasses">' +
         '<svg class="icon" >' +
         '<use :xlink:href="this.iconCategoryPath" />' +
@@ -333,8 +363,7 @@ function initApp(el) {
         computed: {
             fixedCategoriesClasses: function () {
                 var self = this;
-                console.log('fixedCategoriesClasses')
-                return self.fixedCategories ? 'fixed' : '';
+                // return self.inViewport.above ? 'fixed' : '';
             },
             visibleComputed: function () {
                 var self = this;
@@ -354,6 +383,8 @@ function initApp(el) {
  * function init Landing
  */
 function initLanding(id) {
+    var baseline = document.getElementById('landing-base-line');
+
     var opts = {
         duration: 50,
         file: 'assets/svg/landing.svg',
@@ -361,8 +392,10 @@ function initLanding(id) {
         animTimingFunction: Vivus.EASE,
         reverseStack: true
     };
-    var landing = new Vivus(id, opts);
-    landing.play(2);
+    var landing = new Vivus(id, opts , function () {
+        baseline.classList.add('animate')
+    });
+
 }
 
 

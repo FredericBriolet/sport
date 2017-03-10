@@ -60,7 +60,6 @@ function getIndexCategory(cat) {
             break;
         case 'App':
             return 1;
-            self.categoryClass = 'mobile';
             break;
         default:
             return 0;
@@ -113,9 +112,6 @@ for (var i = 0; i < timeline.length; i++) {
     }
 
     month_old = month;
-
-
-    // console.log(timeline[i]);
 }
 timeline_by_month.push(tmp_month);
 
