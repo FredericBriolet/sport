@@ -15,13 +15,13 @@
         <div id="svg-landing" class="svg-landing"></div>
     </section>
     <div id="app">
-    <section class="section-intro">
+    <section id="categories-container-parent" class="section-intro">
         <div class="section-intro-inner">
             <p class="section-intro-text"><b>Recent news about Sport Technology</b><br/>We watched the latest innovations about
                 Sport from september 2016 to march 2017, with the objective of sharing what's going on in this domain,
                 what will it become in the future and what people think about it.<br/>We divided the news in 5
                 categories :</p>
-            <transition-group name="categories-list" class="categories-container" :class="fixedCategoriesClasses" tag="ul">
+            <transition-group name="categories-list" class="categories-container" id="categories-container" :class="fixedCategoriesClasses" tag="ul">
                 <category-component v-for="(category, index) in categories" :category="category" :index="index" :key="category.index"></category-component>
             </transition-group>
         </div>
@@ -29,12 +29,12 @@
     <section id="section-timeline" class="section-timeline">
         <div class="timeline-container">
             <div :in-viewport-offset-top="-300"  class="timeline-container-month" v-for="(articlesByMonth, index) in articles">
-                <month-component :month="articlesByMonth[0].date.month.name"></month-component>
+                <month-component :in-viewport-once="true" :month="articlesByMonth[0].date.month.name"></month-component>
                 <article-component :in-viewport-offset-top="-200" :in-viewport-once='true' v-for="(article, index) in articlesByMonth" :index="index" :article="article"></article-component>
             </div>
         </div>
     </section>
-    <section class="section-intro">
+    <section id="pos-end" class="section-intro">
         <div class="section-intro-inner">
             <p class="section-intro-text">The articles above illustrate one fact : the Sport Tech industry is in huge expansion.<br/><br/><b>Smart devices</b> are multiplying quickly, today there are plenty of connected objects that does more or less the same thing : <b>track your physical data</b> to help feeling better and improving oneself through a <b>mobile app</b>. Nevertheless, innovations appear almost every week and open doors to new usages and deeper functionalities, particulary in health and physical prevention systems.<br/><br/>
             Aside, the <b>Virtual Reality</b> market is still at its beginning because it just has hit the public market, but it will probably have an <b>important impact in many domains</b>, video games of course, but also real sports, art and entertainment.<br/><br/>
