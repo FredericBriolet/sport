@@ -137,9 +137,6 @@ function initTimeline(el) {
         data: {
             categoryClass: ''
         },
-        data: {
-            // visible: false
-        },
         mixins: [inViewPort],
         computed: {
             visible: function () {
@@ -186,9 +183,9 @@ function initTimeline(el) {
         '<div v-if="visible" class="article-date"><span class="date">{{ article.date.day }}<sup>th</sup></span></div>' +
         '</transition>' +
         '<div class="article-img-container">' +
-            '<transition name="transition-article-image-slide">'+
+        '<transition name="transition-article-image-slide">' +
         '<img v-show="article.medias.image && visible" class="article-image" :src="this.article.medias.image" :alt="this.article.title">' +
-        '</transition>'+
+        '</transition>' +
         '</div>' +
         '<div class="article-content" >' +
         '<transition name="transition-article-content">' +
@@ -208,11 +205,13 @@ function initTimeline(el) {
         '</footer>' +
         '</main>' +
         '</transition>' +
-        // '<aside class="articles-more">' +
-        // '<ul class="article-tags">' +
-        // '<li class="article-tag" v-for="tag in article.hashtag">{{ tag }}</li>' +
-        // '</ul>' +
-        // '</aside>' +
+        '<aside class="articles-more">' +
+        '<transition v-if="visible"  name="transition-article-aside">' +
+            '<ul class="article-tags">' +
+            '<li class="article-tag" v-for="tag in article.hashtag">{{ tag }}</li>' +
+            '</ul>' +
+        '</transition>' +
+        '</aside>' +
         '</div>' +
         '</article>'
     };

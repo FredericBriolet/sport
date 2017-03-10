@@ -492,7 +492,6 @@ main > section {
     transition: transform .5s ease .25s, margin .5s cubic-bezier(0.075, 0.820, 0.165, 1.000) .25s, opacity .5s cubic-bezier(0.470, 0.000, 0.745, 0.715) .25s, filter .5s cubic-bezier(0.470, 0.000, 0.745, 0.715) .25s;
 }
 
-
 .timeline-article.article-left .transition-article-image-slide-enter {
     opacity: 0;
     margin-left: 80%;
@@ -509,12 +508,18 @@ main > section {
     filter: blur(15px) grayscale(75%);
 }
 
-.transition-article-image-slide-leave-to {
-    opacity: .3;
+/*Aside transition*/
+
+.transition-article-aside-enter-active {
+    transition: color .5s ease .25s, margin .75s cubic-bezier(0.075, 0.820, 0.165, 1.000) .75s, opacity .5s cubic-bezier(0.470, 0.000, 0.745, 0.715) .7s, border .75s cubic-bezier(0.470, 0.000, 0.745, 0.715) .75s;
 }
 
-
-
+.transition-article-aside-enter {
+    margin-bottom: 50px;
+    color: #f5f7f7;
+    border: none;
+    opacity: 0;
+}
 
 /*@end TRANSITIONS*/
 
