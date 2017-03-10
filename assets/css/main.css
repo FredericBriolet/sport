@@ -282,6 +282,7 @@ main > section {
     width: 100%;
     min-height: 300px;
     padding: 2.5em;
+    transition: opacity .5s cubic-bezier(0.470, 0.000, 0.745, 0.715), filter .5s cubic-bezier(0.470, 0.000, 0.745, 0.715);
 }
 
 .timeline-container-month .timeline-article:last-child {

@@ -149,12 +149,12 @@ function initApp(el) {
               var self = this;
               var parent = self.$parent;
               if(parent.$data.activeCategories.length === 0) {
-                  return true;
+                  return {opacity: 1};
               }
               if(parent.$data.activeCategories.indexOf(self.article.category.index) > -1) {
-                  return true
+                  return {opacity: 1};
               } else {
-                  return false;
+                  return {opacity: .25, filter: 'blur(20px)'};
               }
             },
             offset: function () {
@@ -191,7 +191,7 @@ function initApp(el) {
             }
         },
         template: '' +
-        '<article v-show="enabledArticle" class="timeline-article" :class="this.switchPosition">' +
+        '<article :style="enabledArticle" class="timeline-article" :class="this.switchPosition">' +
         '<transition name="transition-article-date">' +
         '<div v-show="visible" class="article-date"><span class="date">{{ article.date.day }}<sup>th</sup></span></div>' +
         '</transition>' +
